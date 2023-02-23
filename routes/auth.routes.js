@@ -23,9 +23,7 @@ authRoutes.post("/login", async (req, res) => {
     if (!isMatch) {
       return res.json({ error: "Password was incorrect!" });
     }
-    const userWithourPassword = await User.findOne({ email }).select(
-      "-password"
-    );
+    const userWithourPassword = await User.findOne({ email }).select("-password");
     res.json({
       user: userWithourPassword,
       accessToken: generateToken(user._id),
@@ -57,6 +55,16 @@ authRoutes.post("/register", async (req, res) => {
         accessToken: generateToken(userWithoutPass._id),
       });
     }
+  } catch (error) {
+    res.json({ error: error.message });
+  }
+});
+
+authRoutes.post("/gettests", async (req, res) => {
+  const email = req.body.email;
+  try {
+    const { tests } = await User.findOne({ email });
+    res.json(tests);
   } catch (error) {
     res.json({ error: error.message });
   }

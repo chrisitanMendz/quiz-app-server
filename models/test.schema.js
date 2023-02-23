@@ -2,17 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const TestSchema = Schema({
-  testNo: {
-    type: Number,
-    unique: true,
-  },
+  testNo: Number,
   questions: [
     {
-      id: {
-        type: String,
-        unique: true,
-      },
-      questions: String,
+      qId: Number,
+      question: String,
       choices: [String],
       answer: String,
       score: Number,
